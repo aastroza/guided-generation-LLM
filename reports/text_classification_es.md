@@ -9,6 +9,8 @@
 
 ## Datos
 
+Quise buscar un conjunto de datos fuese incluso desafiante para **gpt-4**. Así que elegí uno de la [biblioteca de evals de OpenAI](https://github.com/openai/evals/pull/56). Se tratan de datos para la detección de sarcasmos. Un ejemplo de una entrada del conjunto de datos es el siguiente:
+
 ```json
 {"input": [{"role": "system",
    "content": "Respond with only a 1 or 0 to signify if the user's message includes sarcasm, or not"},
@@ -16,6 +18,7 @@
    "content": "thirtysomething scientists unveil doomsday clock of hair loss"}],
  "ideal": "1"}
 ```
+Así que como calvo aun no asumido, me pareció un conjunto de datos atractivo. En total son casi 30.000 ejemplos. Por razones de costos para la avaluación solo usé 1000 ejemplos al azar (aparte de *GPU poor* también soy *credit card poor* :sweat_smile:)
 
 ## Generación no Guiada
 
@@ -82,13 +85,17 @@ El resumen de los experimentos realizados es el siguiente:
 
 Cosas que se pueden inferir del gráfico:
 
-- Las versiones guiadas de tanto GPT-3.5 como GPT-4 tienen mayor precisión que sus contrapartes no guiadas. En particular la ganancia de guiar a GPT-3.5 es bastante considerable, pasando de un 54.6% a un 64.1% de acierto sin aumentar demasiado los costos.
-- GPT-4, ya sea guiado o no guiado, tiene mayor precisión que GPT-3.5 a cualquier costo dado.
-- El intento de replicar la [idea de Luis del mix de modelos](https://www.linkedin.com/feed/update/urn:li:activity:7137413404217991168/) no salió tan bien en este caso. Probablemente haya que darle una revisión más profunda.
+- Las versiones guiadas de tanto **gpt-3.5** como **gpt-4** tienen mayor precisión que sus contrapartes no guiadas. En particular la ganancia de guiar a **gpt-3.5** es bastante considerable, pasando de un 54.6% a un 64.1% de acierto sin aumentar demasiado los costos.
+- **gpt-4**, ya sea guiado o no guiado, tiene mayor precisión que **gpt-3.5** a cualquier costo dado.
+- El intento de replicar la [idea de Luis del mix de modelos](https://www.linkedin.com/feed/update/urn:li:activity:7137413404217991168/) no salió tan bien en este caso, pareciera ser mejor usar **gpt-4** directamente. Probablemente haya que darle una revisión más profunda.
 - El costo parece aumentar linealmente con la precisión, indicando que los modelos más precisos son más caros de utilizar. Este tipo de análisis es útil para determinar los compromisos entre la precisión y el costo, usar LLMs es caro y por supuesto que el gasto es un factor en discusión al construir productos.
 
 ## Ideas futuras
 
-Por supuesto que para realizar mejores conclusiones deberíamos realizar experimentos sobre otros conjuntos de datos, usar distintas estrategias de prompting, explorar los otros modos de funcionamiento de [Instructor](https://github.com/jxnl/instructor), incluir otros tipos de tareas más complejas (por ejemplo la generación de grafos de conocimiento es algo que me interesa mucho) y comparar distintos frameworks (estoy muy entusiasmado por comprar resultados usando [Outlines](https://github.com/outlines-dev/outlines)). Es un trabajo que me entusiasma así que con el paso del tiempo espero construir un verdadero benchmark de generación guiada. 
+- Por supuesto que para realizar conclusiones más generales deberíamos realizar experimentos sobre otros conjuntos de datos.
+- Como se redacten los prompts incide bastante en el resultado, debería seguir experimentando con distintas estrategias (hay algunas bien ingeniosas como [esta](https://github.com/outlines-dev/outlines/discussions/379))
+- [Instructor](https://github.com/jxnl/instructor) tiene varios modos de funcionamiento. Sería interesante explorar sus diferencias.
+- Incluir otros tipos de tareas más complejas, por ejemplo la [extracción de grafos de conocimiento](https://jxnl.github.io/instructor/examples/knowledge_graph/) es algo que me interesa mucho.
+- Me gustaría comparar distintos frameworks para realizar la generación guida, en particular estoy muy interesado en comparar resultados usando [Outlines](https://github.com/outlines-dev/outlines)).
 
-Así que seguiré profundizando en el tema en futuros posts. Cualquier sugerencia es bienvenida.
+Es un trabajo que me entusiasma así que con el paso del tiempo espero construir un verdadero benchmark de generación guiada. Seguiré profundizando en el tema en futuros posts. Cualquier sugerencia es bienvenida.
