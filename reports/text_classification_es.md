@@ -22,6 +22,8 @@ Así que como calvo aun no asumido, me pareció un conjunto de datos atractivo. 
 
 ## Generación no Guiada
 
+Para la generación guiada usé un código estándar de la [Chat Completion API de OpenAI](https://platform.openai.com/docs/guides/text-generation/chat-completions-api). Algo que se ve más o menos así:
+
 ```python
 from openai import OpenAI
 
@@ -35,6 +37,10 @@ def generate_response(sample: dict, model: str):
     )
     return response.choices[0].message.content
 ```
+
+Lo importante es notar que los ejemplos del conjunto de datos son efectivamente los mensajes que necesitamos incluir en la conversación, ya que forman una lista de objetos mensaje, incluyendo uno con rol de sistema.
+
+La evaluación consistirá en generar respuestas a los 1000 ejemplos del conjunto de datos de prueba usando los modelos `gpt-3.5-turbo`, `gpt-4` y `gpt-4-1106-preview`. La respuesta obtenida se compará con la definida como `ideal` en el conjunto de datos con el fin de calcular un porcentaje de acierto.
 
 ## Generación Guiada
 
@@ -96,6 +102,6 @@ Cosas que se pueden inferir del gráfico:
 - Como se redacten los prompts incide bastante en el resultado, debería seguir experimentando con distintas estrategias (hay algunas bien ingeniosas como [esta](https://github.com/outlines-dev/outlines/discussions/379))
 - [Instructor](https://github.com/jxnl/instructor) tiene varios modos de funcionamiento. Sería interesante explorar sus diferencias.
 - Incluir otros tipos de tareas más complejas, por ejemplo la [extracción de grafos de conocimiento](https://jxnl.github.io/instructor/examples/knowledge_graph/) es algo que me interesa mucho.
-- Me gustaría comparar distintos frameworks para realizar la generación guida, en particular estoy muy interesado en comparar resultados usando [Outlines](https://github.com/outlines-dev/outlines)).
+- Me gustaría comparar distintos frameworks para realizar la generación guida, en particular estoy muy interesado en comparar resultados usando [Outlines](https://github.com/outlines-dev/outlines).
 
 Es un trabajo que me entusiasma así que con el paso del tiempo espero construir un verdadero benchmark de generación guiada. Seguiré profundizando en el tema en futuros posts. Cualquier sugerencia es bienvenida.
