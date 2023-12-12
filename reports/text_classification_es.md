@@ -1,11 +1,11 @@
-# Introduccion a la Generación Guiada de Texto usando LLMs.
+# Introduccion a la Generación Guiada de Texto usando Large Language Models
 
 > [!NOTE]
 > Este post está inspirado en [esta publicación de LinkedIn de Luis Herreros](https://www.linkedin.com/feed/update/urn:li:activity:7137413404217991168/).
 
 
 > [!IMPORTANT]
-> Todo el código desarrollado para escribir este post puedes encontrarlos en este [Jupyter Notebook](../notebooks/text_classification.ipynb).
+> Si quieres replicar este análisis: todo el código desarrollado para escribir este post puedes encontrarlo en este [Jupyter Notebook](../notebooks/text_classification.ipynb).
 
 ## Datos
 
@@ -18,7 +18,7 @@ Quise buscar un conjunto de datos fuese incluso desafiante para **gpt-4**. Así 
    "content": "thirtysomething scientists unveil doomsday clock of hair loss"}],
  "ideal": "1"}
 ```
-Así que como calvo aun no asumido, me pareció un conjunto de datos atractivo. En total son casi 30.000 ejemplos. Por razones de costos para la avaluación solo usé 1000 ejemplos al azar (aparte de *GPU poor* también soy *credit card poor* :sweat_smile:)
+Así que como calvo aun no asumido, me pareció un conjunto de datos atractivo. En total son casi 30.000 ejemplos. Por razones de costos para la evaluación solo usé 1000 ejemplos al azar (aparte de *GPU poor* también soy *credit card poor* :sweat_smile:)
 
 ## Generación no Guiada
 
@@ -99,9 +99,9 @@ Cosas que se pueden inferir del gráfico:
 ## Ideas futuras
 
 - Por supuesto que para realizar conclusiones más generales deberíamos realizar experimentos sobre otros conjuntos de datos.
+- Probar con otras tareas más complejas, por ejemplo la [extracción de grafos de conocimiento](https://jxnl.github.io/instructor/examples/knowledge_graph/) es algo que me interesa mucho.
 - Como se redacten los prompts incide bastante en el resultado, debería seguir experimentando con distintas estrategias (hay algunas bien ingeniosas como [esta](https://github.com/outlines-dev/outlines/discussions/379))
 - [Instructor](https://github.com/jxnl/instructor) tiene varios modos de funcionamiento. Sería interesante explorar sus diferencias.
-- Incluir otros tipos de tareas más complejas, por ejemplo la [extracción de grafos de conocimiento](https://jxnl.github.io/instructor/examples/knowledge_graph/) es algo que me interesa mucho.
-- Me gustaría comparar distintos frameworks para realizar la generación guida, en particular estoy muy interesado en comparar resultados usando [Outlines](https://github.com/outlines-dev/outlines).
+- Me gustaría comparar distintos frameworks para realizar la generación guiada, en particular estoy muy interesado en comparar resultados usando [Outlines](https://github.com/outlines-dev/outlines).
 
 Es un trabajo que me entusiasma así que con el paso del tiempo espero construir un verdadero benchmark de generación guiada. Seguiré profundizando en el tema en futuros posts. Cualquier sugerencia es bienvenida.
