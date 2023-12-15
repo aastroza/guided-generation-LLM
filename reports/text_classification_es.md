@@ -96,6 +96,32 @@ Cosas que se pueden inferir del gráfico:
 - El intento de replicar la [idea de Luis del mix de modelos](https://www.linkedin.com/feed/update/urn:li:activity:7137413404217991168/) no salió tan bien en este caso, pareciera ser mejor usar **gpt-4** directamente. Probablemente haya que darle una revisión más profunda.
 - El costo parece aumentar linealmente con la precisión, indicando que los modelos más precisos son más caros de utilizar. Este tipo de análisis es útil para determinar los compromisos entre la precisión y el costo, usar LLMs es caro y por supuesto que el gasto es un factor en discusión al construir productos.
 
+## Bonus: Comparando con Mistral
+
+```python
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
+import os
+
+api_key = os.environ["MISTRAL_API_KEY"]
+client = MistralClient(api_key=api_key)
+
+def generate_mistral_response(sample: dict, model: str):
+    response = client.chat(
+        model=model,
+        messages=[ChatMessage(role=m['role'], content=m['content']) for m in sample['input']],
+        temperature=0.0,
+        max_tokens=2
+    )
+    return response.choices[0].message.content
+```
+
+<img src="figures/sarcasm_accuracy_vs_cost_mistral_openai.png" alt="sarcasm" width="600"/>
+
+- **mistral** parece ofrecer un equilibrio eficiente entre costo y precisión, superando a **gpt-3.5** en términos de exactitud y, en ocasiones, también en costo. Por lo tanto sería una opción valiosa para tareas donde la precisión es importante pero el presupuesto es limitado. 
+
+- Mientras tanto **gpt-4** sigue siendo la opción preferida para aplicaciones donde se requiere la máxima precisión, aunque con un costo mayor. La elección del modelo adecuado dependerá de las necesidades específicas y del contexto de uso.
+
 ## Ideas futuras
 
 - Por supuesto que para realizar conclusiones más generales deberíamos realizar experimentos sobre otros conjuntos de datos.
