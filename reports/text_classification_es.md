@@ -7,6 +7,16 @@
 > [!IMPORTANT]
 > Si quieres replicar este análisis: todo el código desarrollado para escribir este post puedes encontrarlo en este [Jupyter Notebook](../notebooks/text_classification.ipynb).
 
+Chip Huyen ["Building LLM applications for production"](https://huyenchip.com/2023/04/11/llm-engineering.html#natural_languages_ambiguity)
+
+<img src="figures/1_ambiguous_output.png" alt="sarcasm" width="800"/>
+
+[Pydantic is all you need](https://www.youtube.com/watch?v=yj-wSRJwrrc)
+
+### (prompt:`str`, schema:`str`) &rarr; `str`
+
+### (prompt:`str`, schema:`Model`) &rarr; `Model`
+
 ## Datos
 
 Quise buscar un conjunto de datos fuese incluso desafiante para **gpt-4**. Así que elegí uno de la [biblioteca de evals de OpenAI](https://github.com/openai/evals/pull/56). Se tratan de datos para la detección de sarcasmos. Un ejemplo de una entrada del conjunto de datos es el siguiente:
@@ -98,6 +108,8 @@ Cosas que se pueden inferir del gráfico:
 
 ## Bonus: Comparando con Mistral
 
+Hace algunos días hizo su estreno la [API de Mistral](https://docs.mistral.ai/) y su uso mediante el [cliente de python](https://github.com/mistralai/client-python) es bastante similar al sdk de openai así que con poco esfuerzo podemos agregar una familia de modelos más al análisis.
+
 ```python
 from mistralai.client import MistralClient
 from mistralai.models.chat_completion import ChatMessage
@@ -115,6 +127,9 @@ def generate_mistral_response(sample: dict, model: str):
     )
     return response.choices[0].message.content
 ```
+El código es similar al usado para evaluar los modelos de OpenAI, pero acá estoy haciendo un pequeño truco usando el parámetro `max_tokens = 2` que restringe el tamaño del texto de salida, para así asegurar respuestas cortas (recordemos que estamos buscando que los LLM respondan solo '0' o '1' para este caso en particular). Esto debido a que en mis pruebas iniciales la verbosidad de la respuesta de los modelos de Mistral fue muy grande, nunca fue capaz de solo responder con un caracter. Así que decidí darle una pequeña ayuda.
+
+Los resultados de comparar con los modelos de OpenAI en este escenario son:
 
 <img src="figures/sarcasm_accuracy_vs_cost_mistral_openai.png" alt="sarcasm" width="600"/>
 
